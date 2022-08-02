@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+import 'data_sources/local_data_source/models/weathers_list.dart';
+import 'models/weather.dart';
+
+void main() async {
+  await setupHive();
   runApp(const MyApp());
+}
+
+Future<void> setupHive() async {
+  await Hive.initFlutter();
+  Hive
+    ..registerAdapter(WeatherAdapter())
+    ..registerAdapter(WeathersListAdapter());
 }
 
 class MyApp extends StatelessWidget {
