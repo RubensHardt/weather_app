@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 
-import '../models/weather.dart';
+import '../../models/weather.dart';
 
 class RemoteDataSource {
   final Dio dio;
 
   RemoteDataSource(this.dio);
 
-  static const apiKey = 'apikey';
+  static const apiKey = 'apiKey';
   static const baseUrl = 'http://api.openweathermap.org/data/2.5';
   static const units = 'metric';
   static const cityCodeMap = {

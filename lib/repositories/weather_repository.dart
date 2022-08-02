@@ -1,4 +1,4 @@
-import '../data_sources/remote_data_source.dart';
+import '../data_sources/remote_data_source/remote_data_source.dart';
 import '../models/weather.dart';
 
 class WeatherRepository {
