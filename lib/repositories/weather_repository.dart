@@ -12,6 +12,12 @@ class WeatherRepository {
   });
 
   Future<List<Weather>?> getCurrentWeathers() async {
-    return await remoteDataSource.getCurrentWeathers();
+    try {
+      final weathers = await remoteDataSource.getCurrentWeathers();
+      localDataSource.saveCurrentWeathers(weathers);
+      return weathers;
+    } catch (error) {
+      return await localDataSource.getCurrentWeathers();
+    }
   }
 }
