@@ -1,16 +1,30 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'weather.g.dart';
+
+const weatherBox = 'weatherBox';
+
+@HiveType(typeId: 0)
 class Weather {
+  @HiveField(0)
   final int cityCode;
 
+  @HiveField(1)
   final String city;
 
+  @HiveField(2)
   final String countryCode;
 
+  @HiveField(3)
   final double temperature;
 
+  @HiveField(4)
   final String state;
 
+  @HiveField(5)
   final String iconCode;
 
+  @HiveField(6)
   final String description;
 
   Weather({
