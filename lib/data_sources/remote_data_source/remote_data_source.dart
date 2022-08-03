@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 
+import '../../models/daily_forecast.dart';
+import '../../models/forecast.dart';
+import '../../models/hourly_forecast.dart';
 import '../../models/weather.dart';
 
 class RemoteDataSource {
@@ -28,6 +31,17 @@ class RemoteDataSource {
     }
   }
 
+  Future<Forecast> getCityForecast(int cityCode) async {
+    try {
+      final response = await dio
+          .get('$baseUrl/forecast?id=$cityCode&units=$units&appid=$apiKey');
+      final result = _parseForecast(response.data);
+      return result;
+    } catch (error) {
+      return Future.error(error);
+    }
+  }
+
   List<Weather> _parseWeathers(dynamic response) {
     final responseList = response['list'] as List<dynamic>;
     final parsed = responseList.map((element) {
@@ -44,6 +58,49 @@ class RemoteDataSource {
     }).toList();
     return parsed;
   }
+
+  Forecast _parseForecast(dynamic response) {
+    final responseList = response['list'] as List<dynamic>;
+    final dailyForecasts = _parseDailyForecast(responseList);
+    final cityInfo = response['city'];
+    return Forecast(
+      cityCode: cityInfo['id'],
+      city: cityInfo['name'],
+      country: cityInfo['country'],
+      dailyForecasts: dailyForecasts,
+    );
+  }
+
+  List<DailyForecast> _parseDailyForecast(List<dynamic> responseList) {
+    final uniqueDates = responseList.map((e) => _parseDate(e)).toSet();
+    return uniqueDates.map((date) {
+      return DailyForecast(
+        date: date,
+        forecasts: _parseHourlyForecast(date, responseList),
+      );
+    }).toList();
+  }
+
+  List<HourlyForecast> _parseHourlyForecast(
+    String date,
+    List<dynamic> responseList,
+  ) {
+    return responseList.where((e) => _parseDate(e) == date).map((e) {
+      final weather = e['weather'][0];
+      return HourlyForecast(
+        temperature: _parseTemperature(e),
+        state: weather['main'],
+        iconCode: weather['icon'],
+        time: _parseTime(e),
+      );
+    }).toList();
+  }
+
+  String _parseTime(dynamic value) =>
+      value['dt_txt'].toString().split(' ').last;
+
+  String _parseDate(dynamic value) =>
+      value['dt_txt'].toString().split(' ').first;
 
   double _parseTemperature(dynamic value) {
     return double.tryParse(value['main']['temp'].toString()) ?? 0.0;
