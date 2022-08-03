@@ -36,4 +36,19 @@ class Weather {
     required this.iconCode,
     required this.description,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (other is Weather) {
+      return cityCode == other.cityCode &&
+          city == other.city &&
+          countryCode == other.countryCode &&
+          temperature == other.temperature &&
+          state == other.state &&
+          iconCode == other.iconCode &&
+          description == other.description;
+    } else {
+      return false;
+    }
+  }
 }

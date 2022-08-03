@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'daily_forecast.dart';
@@ -26,4 +27,16 @@ class Forecast {
     required this.country,
     required this.dailyForecasts,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (other is Forecast) {
+      return cityCode == other.cityCode &&
+          city == other.city &&
+          country == other.country &&
+          listEquals(dailyForecasts, other.dailyForecasts);
+    } else {
+      return false;
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/weather.dart';
 import '../../../utils/constants.dart';
+import '../../details/details_page.dart';
 import 'weather_item.dart';
 
 class CitiesWeatherList extends StatelessWidget {
@@ -18,10 +19,14 @@ class CitiesWeatherList extends StatelessWidget {
         itemBuilder: (context, index) {
           final weather = weathers[index];
           return WeatherListItem(
-              weather: weather,
-              onTap: () {
-                //TODO: Navigate no details
-              });
+            weather: weather,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => DetailsPage(weather.cityCode, weather.city),
+              ),
+            ),
+          );
         },
         separatorBuilder: (context, index) {
           return const SizedBox(
