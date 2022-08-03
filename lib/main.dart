@@ -8,6 +8,9 @@ import 'package:weather_app/repositories/weather_repository.dart';
 import 'data_sources/local_data_source/local_data_source.dart';
 import 'data_sources/local_data_source/models/weathers_list.dart';
 import 'data_sources/remote_data_source/remote_data_source.dart';
+import 'models/daily_forecast.dart';
+import 'models/forecast.dart';
+import 'models/hourly_forecast.dart';
 import 'models/weather.dart';
 
 final getIt = GetIt.instance;
@@ -22,7 +25,10 @@ Future<void> setupHive() async {
   await Hive.initFlutter();
   Hive
     ..registerAdapter(WeatherAdapter())
-    ..registerAdapter(WeathersListAdapter());
+    ..registerAdapter(WeathersListAdapter())
+    ..registerAdapter(HourlyForecastAdapter())
+    ..registerAdapter(DailyForecastAdapter())
+    ..registerAdapter(ForecastAdapter());
 }
 
 void setupWeatherRepository() {
