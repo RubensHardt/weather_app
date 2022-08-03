@@ -22,4 +22,16 @@ class HourlyForecast {
     required this.iconCode,
     required this.time,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (other is HourlyForecast) {
+      return temperature == other.temperature &&
+          state == other.state &&
+          iconCode == other.iconCode &&
+          time == other.time;
+    } else {
+      return false;
+    }
+  }
 }
