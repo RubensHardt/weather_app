@@ -1,16 +1,35 @@
 # weather_app
 
-A simple weather app tracker
+A simple weather app tracker.
 
-## Getting Started
+The app tracks the current weather and the forecast for the 5 next days of the following cities:
 
-This project is a starting point for a Flutter application.
+- Silverstone, UK
+- São Paulo, Brazil
+- Melbourne, Australia
+- Monte Carlo, Monaco
 
-A few resources to get you started if this is your first Flutter project:
+## Contents
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The app has two screens:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Current weather list
+- Forecast for the next 5 days
+
+It has a search feature in the main screen (by city).
+
+It uses [Get It](https://pub.dev/packages/get_it) for dependency injection and a MVVM architecture using [MobX](https://pub.dev/packages/mobx) for state-management.
+
+It has local persistence implemented using Hive[https://pub.dev/packages/hive]. 
+
+## Weather retrieval
+
+It's based on the [OpenWeather](https://openweathermap.org) API. You can create a [free account](https://home.openweathermap.org/users/sign_up) and get your [API key](https://home.openweathermap.org/api_keys).
+
+API documentation:
+- https://openweathermap.org/current
+- https://openweathermap.org/forecast
+
+## Running the app
+
+To run the app, replace the **apiKey** in the **RemoteDataSource** with your API key.
